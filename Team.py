@@ -105,9 +105,9 @@ class Team:
         """
         return self._participants
 
-    def __get_average(self):
+    def get_average(self):
         """
-        Calcule le niveau moyen des participants de l'équipe (méthode privée).
+        Calcule le niveau moyen des participants de l'équipe.
 
         :param: Aucun
 

@@ -263,7 +263,7 @@ class Tirage:
             case SortBy.NORMAL:
                 self.insert_participants_normal_in_team()
             case SortBy.LEVEL:
-                self.insert_participants_level_in_team()
+                self.recursive_insert_participant_level_in_team()
             case _:
                 self.insert_participants_gender_in_team()
 
@@ -332,23 +332,21 @@ class Tirage:
         for i in range(int(self._nb_teams)):
             self._teams[i] = list_sort.pop(0)
 
-    def recursive_insert_participant_level_in_team(self, list_team):
+    def recursive_insert_participant_level_in_team(self):
         """
             Insère les participants restants dans les équipes de manière récursive.
-
-            :param list_team: Une liste de participants restants à insérer.
 
             :return: None
         """
         min_i = 0
-        if len(list_team) == 0:
+        if len(self._participants) == 0:
             return 0
         else:
-            for i in range(self._nb_teams):
+            for i in range(int(self._nb_teams)):
                 if self._teams[i].get_average() < self._teams[min_i].get_average():
                     min_i = i
-            self._teams[min_i].append(list_team.pop(0))
-            return self.recursive_insert_participant_level_in_team(list_team)
+            self._teams[min_i].add_participant(self._participants.pop(0))
+            return self.recursive_insert_participant_level_in_team()
 
     def team_per_gender(self, c):
         """ Trie un tableau de participants avec un genre et renvoie que les participants avec le genre égale
